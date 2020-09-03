@@ -206,6 +206,15 @@ void SPI1_IRQHandler(void){
 	SpiRegs * spi = info->spi;
 	char * receiveBuffer = info->spiRxBuffer;
 	char * transmitBuffer = info->spiTxBuffer;
+	char receive [27];
+	if(info->rxCount != 27){
+		receive[info->rxCount] = spiReadDataRegister(spi);
+		 info->rxCount++;
+	}
+	else{
+		receive[info->rxCount] = spiReadDataRegister(spi);
+	}
+	/*
 	if(info->txTurn){
 		   if(info->txLength != info->txCount){
 			   spiResetFlag(spi,SPI_TRANSMIT_EMPTY);
@@ -231,6 +240,7 @@ void SPI1_IRQHandler(void){
 		   }
 	}
 	spiResetFlag(spi,SPI_TRANSMIT_EMPTY);
+	*/
 }
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

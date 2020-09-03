@@ -21,28 +21,27 @@ void configureGpio(){
 	gpioSetPinSpeed(gpioB,PIN_13,HIGH_SPEED);
 
 	enableGpioA();
-	//button
-	gpioSetMode(gpioA, PIN_0, GPIO_IN);
-	gpioSetPinSpeed(gpioA,PIN_0,HIGH_SPEED);
 
 	//config SPI1
-	gpioSetMode(gpioA, PIN_15, GPIO_ALT);
-	gpioSetPinSpeed(gpioA,PIN_15,HIGH_SPEED);
+	gpioSetMode(gpioA, PIN_4, GPIO_ALT);
+	gpioSetOutputType(gpioA, PIN_4, PUSH_PULL);
+	gpioSetPinSpeed(gpioA,PIN_4,HIGH_SPEED);
+	gpioSetPullUpDownReg(gpioA , PIN_4 , PULL_UP);
 
-	gpioSetMode(gpioB, PIN_3, GPIO_ALT);
-	gpioSetMode(gpioB, PIN_4, GPIO_ALT);
-	gpioSetMode(gpioB, PIN_5, GPIO_ALT);
-	gpioSetPinSpeed(gpioB,PIN_3,HIGH_SPEED);
-	gpioSetPinSpeed(gpioB,PIN_4,HIGH_SPEED);
-	gpioSetPinSpeed(gpioB,PIN_5,HIGH_SPEED);
+	gpioSetMode(gpioA, PIN_5, GPIO_ALT);
+	gpioSetMode(gpioA, PIN_6, GPIO_ALT);
+	gpioSetMode(gpioA, PIN_7, GPIO_ALT);
+	gpioSetPinSpeed(gpioA,PIN_7,HIGH_SPEED);
+	gpioSetPinSpeed(gpioA,PIN_5,HIGH_SPEED);
+	gpioSetPinSpeed(gpioA,PIN_6,HIGH_SPEED);
 }
 
 void initSPI1(){
 	enableSpi1();
-	gpioSetAlternateFunction(gpioA ,PIN_15 ,AF5); //set PA15 as SPI NSS
-	gpioSetAlternateFunction(gpioB ,PIN_3 ,AF5); //set PB3 as SPI SCLK
-	gpioSetAlternateFunction(gpioB ,PIN_4 ,AF5); //set PB4 as SPI MISO
-	gpioSetAlternateFunction(gpioB ,PIN_5 ,AF5); //set PB5 as SPI MOSI
+	gpioSetAlternateFunction(gpioA ,PIN_4 ,AF5); //set PA4 as SPI NSS ----->CSB
+	gpioSetAlternateFunction(gpioA ,PIN_5 ,AF5); //set PA5 as SPI SCLK ---->CLK
+	gpioSetAlternateFunction(gpioA ,PIN_6 ,AF5); //set PA6 as SPI MISO --->SDO
+	gpioSetAlternateFunction(gpioA ,PIN_7 ,AF5); //set PA7 as SPI MOSI ---->SDA
 	spiSetControlRegister(spi1,DEFAULT_SETTING|SPI_NSS_1);
 	//enable interrupt
 	nvicEnableInterrupt(35);

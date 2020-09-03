@@ -86,12 +86,15 @@ int main(void)
 
   /* USER CODE BEGIN SysInit */
   configureGpio();
+  spiInfoConfig();
   initSPI1();
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   /* USER CODE BEGIN 2 */
-  spiSetControlRegister(spi1,DEFAULT_SETTING|SPI_NSS_1|SPI_TX_EMPTY_INT_ENABLE);
+  spiSetControlRegister(spi1,DEFAULT_SETTING|SPI_NSS_0|SPI_RX_EMPTY_INT_ENABLE);
+  spiWriteDataRegister(spi1,0xD0);
+
 
 
 
@@ -102,7 +105,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  spiWriteDataRegister(spi1,123);
+	  spiWriteDataRegister(spi1,0xD0);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
