@@ -17,8 +17,8 @@
 
 void configureGpio(){
 	enableGpio(PORT_B);
-	gpioSetMode(gpioB, PIN_13, GPIO_OUT);
-	gpioSetPinSpeed(gpioB,PIN_13,HIGH_SPEED);
+	gpioSetMode(gpioB, PIN_12, GPIO_OUT);
+	gpioSetPinSpeed(gpioB,PIN_12,HIGH_SPEED);
 
 	enableGpioA();
 

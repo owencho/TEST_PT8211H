@@ -26,6 +26,7 @@
 #include "Spi.h"
 #include "SpiMacro.h"
 #include "SpiDriver.h"
+#include "Gpio.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -86,14 +87,18 @@ int main(void)
 
   /* USER CODE BEGIN SysInit */
   configureGpio();
-  spiInfoConfig();
+  //spiInfoConfig();
   initSPI1();
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   /* USER CODE BEGIN 2 */
-  spiSetControlRegister(spi1,DEFAULT_SETTING|SPI_NSS_0|SPI_RX_EMPTY_INT_ENABLE);
-  spiWriteDataRegister(spi1,0xD0);
+
+  gpioWriteBit(gpioB, PIN_12 , 1);
+  gpioWriteBit(gpioB, PIN_12 , 0);
+  spiWriteDataRegister(spi1,-30000);
+  //HardwareConfig.h
+  spiSetControlRegister(spi1,DEFAULT_SETTING|SPI_NSS_0|SPI_TX_EMPTY_INT_ENABLE);
 
 
 
@@ -105,7 +110,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  spiWriteDataRegister(spi1,0xD0);
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -115,6 +120,7 @@ int main(void)
   * @brief System Clock Configuration
   * @retval None
   */
+
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};

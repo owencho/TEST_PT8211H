@@ -25,6 +25,7 @@
 /* USER CODE BEGIN Includes */
 #include "SpiDriver.h"
 #include "Spi.h"
+#include "Gpio.h"
 #include "HardwareConfig.h"
 /* USER CODE END Includes */
 
@@ -201,46 +202,11 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /* USER CODE BEGIN 1 */
-void SPI1_IRQHandler(void){
-	SpiInfo * info =&spiInfo[MASTER];
-	SpiRegs * spi = info->spi;
-	char * receiveBuffer = info->spiRxBuffer;
-	char * transmitBuffer = info->spiTxBuffer;
-	char receive [27];
-	if(info->rxCount != 27){
-		receive[info->rxCount] = spiReadDataRegister(spi);
-		 info->rxCount++;
-	}
-	else{
-		receive[info->rxCount] = spiReadDataRegister(spi);
-	}
-	/*
-	if(info->txTurn){
-		   if(info->txLength != info->txCount){
-			   spiResetFlag(spi,SPI_TRANSMIT_EMPTY);
-			   spiWriteDataRegister(spi ,transmitBuffer[info->txCount]);
-			   info->txCount++;
-		   }else{
-			   info->spiTxBuffer = NULL;
-			   info->txCount = 0;
-			   info->requestTxPacket = 0;
-			   //handleSensorSM();
-		   }
-	}
-	else{
-		   if(info->rxLength != info->rxCount){
-			   receiveBuffer[info->rxCount] = spiReadDataRegister(spi);
-			   info->rxCount ++;
-		   }
 
-		   if(info->rxLength == info->rxCount){
-			   info->requestRxPacket = 0;
-			   info->rxCount = 0;
-			   //handleSensorSM();
-		   }
-	}
-	spiResetFlag(spi,SPI_TRANSMIT_EMPTY);
-	*/
+void SPI1_IRQHandler(void){
+	gpioToggleBit(gpioB, PIN_12);
+	spiWriteDataRegister(spi1,-32768);
+	spiSetControlRegister(spi1,DEFAULT_SETTING|SPI_NSS_0);
 }
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
